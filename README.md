@@ -14,7 +14,7 @@ Forwarding port 80 is necessary for the ACME HTTP-01 challenge to work (Caddy us
 
 Edit `docker-compose.yml` and change the environment variable `SIGNUPS_ALLOWED` from `false` to `true`.
 
-Restart docker compose with `docker compose restart`.
+Restart docker compose with `docker compose down && docker compose up -d`.
 
 Do not commit this change to the git repo.
 
@@ -22,5 +22,6 @@ When done creating accounts issue:
 
 ```sh
 git reset --hard
-docker compose restart
+docker compose down
+docker compose up -d
 ```
