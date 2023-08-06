@@ -1,2 +1,3 @@
-# legovault
-Vaultwarden and Caddy setup
+# Lego Vault
+
+Vaultwarden and Caddy setup.

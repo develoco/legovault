@@ -1,0 +1,6 @@
+.DS_Store
+/.gitconfig/user
+/vw-data/*
+!/vw-data/.keep
+/caddy-data/*
+!/caddy-data/.keep
