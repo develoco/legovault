@@ -4,3 +4,5 @@
 !/vw-data/.keep
 /caddy-data/*
 !/caddy-data/.keep
+/caddy-config/*
+!/caddy-config/.keep
