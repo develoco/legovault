@@ -25,3 +25,8 @@ git reset --hard
 docker compose down
 docker compose up -d
 ```
+
+# Udating when using Docker Compose
+
+docker compose pull
+docker compose up -d
