@@ -5,24 +5,38 @@ services:
     image: vaultwarden/server:latest
     container_name: vaultwarden
     restart: always
+    network_mode: host
     environment:
-      DOMAIN: "https://lego.ddns.net"
+      DOMAIN: "https://toximaxi.duckdns.org" # Updated to your new domain
       SIGNUPS_ALLOWED: false
+      ROCKET_PORT: 8080
     volumes:
       - ./vw-data:/data
 
   caddy:
-    image: caddy:2
+    build: . # This tells it to use the Dockerfile we just made
     container_name: caddy
     restart: always
-    ports:
-      - 8080:80  # Needed for the ACME HTTP-01 challenge.
-      - 4443:443
+    # Since we are using IPv6 and DNS challenge, host mode is more reliable
+    network_mode: host 
+    environment:
+      DOMAIN: "https://toximaxi.duckdns.org"
+      EMAIL: "diegooglin@gmail.com"
+      DUCKDNS_TOKEN: "YOUR_DUCKDNS_TOKEN_HERE"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ./caddy-config:/config
       - ./caddy-data:/data
+
+  duckdns:
+    image: lscr.io/linuxserver/duckdns:latest
+    container_name: duckdns-updater
+    network_mode: host
+    restart: always
     environment:
-      DOMAIN: "https://lego.ddns.net"
-      EMAIL: "diegooglin@gmail.com" # The email address to use for ACME registration.
-      LOG_FILE: "/data/access.log"
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Lisbon
+      - SUBDOMAINS=toximaxi # Your DuckDNS prefix
+      - TOKEN=YOUR_DUCKDNS_TOKEN_HERE
+      - UPDATE_IP=ipv6
