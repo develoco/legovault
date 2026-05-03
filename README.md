@@ -4,7 +4,7 @@ Vaultwarden and Caddy setup.
 
 ## Start the service
 
-Use `docker compose up -d`
+Use `docker compose down && docker compose up -d --build`
 
 ## Port forwarding
 
