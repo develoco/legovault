@@ -1,8 +1,24 @@
 # Lego Vault
 
-Vaultwarden and Caddy setup.
+Vaultwarden and Caddy docker rootless setup with DuckDNS plugin.
 
-## Start the service
+## IP Updater via cron
+
+With Docker rootless is difficult for the IP updater image/container to get the host IP even with "host" network mode.
+
+So it's better to just add a cronjob.
+
+First test the command line:
+
+`curl https://www.duckdns.org/update/toximaxi/{$TOKEN}/$(curl -s -6 icanhazip.com)`
+
+`crontab -e`
+
+```cron
+*/5 * * * * curl https://www.duckdns.org/update/toximaxi/{$TOKEN}/$(curl -s -6 icanhazip.com) > /dev/null 2>&1
+```
+
+## Start/restart the service
 
 Use `docker compose down && docker compose up -d --build`
 
