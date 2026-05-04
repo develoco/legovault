@@ -22,6 +22,7 @@ services:
     environment:
       DOMAIN: "https://toximaxi.duckdns.org"
       EMAIL: "diegooglin@gmail.com"
+      LOG_FILE: "/data/access.log"
       DUCKDNS_TOKEN: "YOUR_DUCKDNS_TOKEN_HERE"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
