@@ -1,6 +1,6 @@
-toximaxi.duckdns.org:4443 {
+{$DOMAIN}:4443 {
     tls {
-        dns duckdns {env.DUCKDNS_TOKEN}
+        dns duckdns {$DUCKDNS_TOKEN}
     }
 
     # Vaultwarden runs on 8080 by default inside its container. 
@@ -8,6 +8,6 @@ toximaxi.duckdns.org:4443 {
     reverse_proxy 127.0.0.1:8080
     
     log {
-        output file {env.LOG_FILE}
+        output file {$LOG_FILE}
     }
 }
