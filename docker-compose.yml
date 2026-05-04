@@ -3,20 +3,18 @@ services:
     image: vaultwarden/server:latest
     container_name: vaultwarden
     restart: always
-    network_mode: host
     environment:
-      DOMAIN: "https://toximaxi.duckdns.org" # Updated to your new domain
+      DOMAIN: "https://toximaxi.duckdns.org"
       SIGNUPS_ALLOWED: false
-      ROCKET_PORT: 8080
     volumes:
       - ./vw-data:/data
 
   caddy:
-    build: . # This tells it to use the Dockerfile we just made
+    build: .
     container_name: caddy
     restart: always
-    # Since we are using IPv6 and DNS challenge, host mode is more reliable
-    network_mode: host 
+    ports:
+      - 4443:443
     environment:
       DOMAIN: "https://toximaxi.duckdns.org"
       EMAIL: "diegooglin@gmail.com"
@@ -26,16 +24,3 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ./caddy-config:/config
       - ./caddy-data:/data
-
-  duckdns:
-    image: lscr.io/linuxserver/duckdns:latest
-    container_name: duckdns-updater
-    network_mode: host
-    restart: always
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Lisbon
-      - SUBDOMAINS=toximaxi # Your DuckDNS prefix
-      - TOKEN=YOUR_DUCKDNS_TOKEN_HERE
-      - UPDATE_IP=ipv6
